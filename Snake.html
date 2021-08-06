@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="http://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript"></script>
+  <title>Snake</title>
+</head>
+<script type="text/javascript">
+  $("body").ready(function () {
+    var fps = 10;
+    var canvas, ctx;
+    var x = 10, y = 10;
+    xf = yf = 0;
+    var tail = 2;
+    var trail = [{ px: x, py: y }, { px: x + 10, py: y }];
+    var food = [];
+    var score = 0;
+    sx = sy = 0;
+    document.addEventListener("keydown", keyPush);
+    setInterval(function () {
+      canvas = document.getElementById('crx');
+      ctx = canvas.getContext('2d');
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 400, 400);
+      if (sx != 0 || sy != 0) score += 1 * (tail - 1);
+
+
+      $("#wynik").html("Wynik: " + score + "</br>Zjedzonych jabłek: " + (tail - 2));
+      x += sx;
+      y += sy;
+      ctx.fillStyle = "lime";
+      for (f = 0; f < trail.length; f++) {
+        ctx.fillRect(trail[f].px, trail[f].py, 10, 10);
+        console.log(x, y);
+        if (x == trail[f].px && y == trail[f].py) { x = y = 10; trail = [{ px: x, py: y }]; tail = 2; score = 0; }
+        if (x == 0 || y == 0 || x == 400 || y == 400) { x = y = 10; trail = [{ px: x, py: y }]; tail = 2; score = 0; }
+      }
+      trail.push({ px: x, py: y });
+      while (trail.length > tail) {
+        trail.shift();
+      }
+      if (food[0].fx * 20 == x && food[0].fy * 20 == y) { tail++; generateFood(); }
+
+      ctx.fillStyle = "red";
+      ctx.fillRect(food[0].fx * 20, food[0].fy * 20, 10, 10);
+
+
+    }, 1000 / 10);
+    function keyPush(e) {
+      if (e.key == 'ArrowLeft') { if (sx > -10) { sx -= 10; } sy = 0; }
+      if (e.key == 'ArrowRight') { if (sx < 10) { sx += 10; } sy = 0; }
+      if (e.key == 'ArrowUp') { if (sy > -10) { sy -= 10; } sx = 0; }
+      if (e.key == 'ArrowDown') { if (sy < 10) { sy += 10; } sx = 0; }
+    }
+
+    function generateFood() {
+      xf = yf = 0;
+      xf = Math.floor(Math.random() * 20);
+      yf = Math.floor(Math.random() * 20);
+      if (xf == 0 || yf == 0) generateFood();
+      else food = [{ fx: xf, fy: yf }];
+    }
+
+    generateFood();
+  });
+</script>
+
+<body>
+  <canvas width="400" height="400" id="crx"></canvas>
+  <div id="wynik"></div>
+</body>
+
+</html>
