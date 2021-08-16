@@ -116,7 +116,7 @@ $(window).ready(async () => {
     else {
 
       id = GM_getValue('id');
-      if (id == null) alert("Brak danych, proszę zacząć od początku");
+      if (id == null) alert("No Data, please Start from the Beginning");
 
       $("body").html("<label for='p1'>Fetching information</label></br><progress id='p1' value='0' max='" + id.length + "'></progress></br><label for='p2'>Fetching Dates</label></br><progress id='p2' value='0' max='" + id.length + "'></progress></br><label for='p3'>Sending Update Requests</label></br><progress id='p3' value='0' max='" + id.length + "'></progress>");
 
