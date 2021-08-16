@@ -7,7 +7,6 @@
 include('config.php');
 session_start();
 error_reporting(0);
-
 function getIPAddress() {  
     
      if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
@@ -53,7 +52,7 @@ $pionkiE = $pionkiR->fetch(PDO::FETCH_ASSOC);
 
 
 
-
+     if(isset($_GET['id'])){
 
      if(@$_SESSION['ip']){
         if($gameInfo['ip_goscia'] != null){
@@ -62,7 +61,7 @@ $pionkiE = $pionkiR->fetch(PDO::FETCH_ASSOC);
         }
         else if($gameInfo['ip_goscia'] == null){
     
-if(isset($_GET['id'])){
+
             if($_SESSION['kto'] == true){
                 $dodajGoscia = "UPDATE gra SET ip_goscia='$ip' WHERE id=".$_GET['id'].";";
                 $dodajGosciaR = $dbh->prepare($dodajGoscia);
@@ -70,7 +69,7 @@ if(isset($_GET['id'])){
             }
         }
     }
-}
+
 
 if($_SESSION['kto'] == true){
     if($gameInfo['prywatna'] == 1){
@@ -95,7 +94,7 @@ if(isset($_POST['nick'])){
         $dodajGosciaR->execute();
 }
 }   
-
+}
 
 
 
@@ -607,7 +606,7 @@ $.ajax({
     method: 'GET',
     url: 'warcaby.php?id=<?php echo $_SESSION['id']; ?>',
     success: function(data){
-     $("body").html(data);
+     $(document).html(data);
     }
 });
     }, 5000);
