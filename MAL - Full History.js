@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         MAL Full History
-// @namespace    Check Your Full Watching History on MAL
+// @namespace    Check Your Full Watching History on MAL!
 // @version      1.0
 // @description  Just an Easy Script that lets You to check Your Full Watching History on MAL
 // @author       Wesołowski Bartosz
@@ -15,13 +15,13 @@
 
 const $ = window.jQuery;
 
-var id = [];
-var CurrentTitle;
-var FullHistory = [];
+let id = [];
+let CurrentTitle;
+let FullHistory = [];
 
 
 if (window.location.pathname.split('/')[2] === 'list,anime') {
-    alert("Start");
+alert("Start");
     $("tbody").find(".status-F, .status-C, .status-H, .status-D").next().children().each(function () {
         id.push($(this).attr("href").slice(30));
     });
@@ -32,7 +32,7 @@ if (window.location.pathname.split('/')[2] === 'list,anime') {
 
 if (window.location.pathname.split('/')[1] === 'ajaxtb.php') {
 
-    id = GM_getValue("id");
+      id = GM_getValue("id");
 
     $("body").css("background-color", "#7E848A").css("color", "#2db300");
     $("body").html("<h1><center><label for='p1'>Fetching Data</label></br><progress id='p1' value='0' max='" + id.length + "'></progress></center></h1>");
